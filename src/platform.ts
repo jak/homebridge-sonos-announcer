@@ -82,13 +82,7 @@ export class SonosAnnouncerPlatform implements DynamicPlatformPlugin {
           `Device defined in config was not found! Please check the name matches exactly.`
         );
       }
-      const uuid = this.api.hap.uuid.generate(
-        switchConfig.switchName +
-          ":" +
-          switchConfig.deviceName +
-          ":" +
-          switchConfig.trackUri
-      );
+      const uuid = this.api.hap.uuid.generate(switchConfig.switchName);
       // see if an accessory with the same uuid has already been registered and restored from
       // the cached devices we stored in the `configureAccessory` method above
       const existingAccessory = this.accessories.find(
