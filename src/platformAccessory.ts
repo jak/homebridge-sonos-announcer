@@ -12,7 +12,7 @@ export class SonosAnnouncerSwitch {
     private readonly accessory: PlatformAccessory<{
       switch: SwitchConfig;
     }>,
-    private readonly sonosDevice: SonosDevice
+    private readonly sonosDevices: SonosDevice[]
   ) {
     // set accessory information
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -24,7 +24,9 @@ export class SonosAnnouncerSwitch {
       )
       .setCharacteristic(
         this.platform.Characteristic.Model,
-        `${this.accessory.context.switch.switchName} (${sonosDevice.Name})`
+        `${this.accessory.context.switch.switchName} (${sonosDevices
+          .map((d) => d.Name)
+          .join(", ")})`
       );
 
     this.service =
@@ -55,19 +57,22 @@ export class SonosAnnouncerSwitch {
     );
 
     if (this.switchOn) {
-      await this.sonosDevice.PlayNotification({
-        trackUri: this.accessory.context.switch.trackUri,
-        timeout: this.accessory.context.switch.timeout,
-        volume: this.accessory.context.switch.volume,
-        delayMs: this.accessory.context.switch.delayMs,
-        notificationFired: (played: boolean) => {
-          this.platform.log.info(
-            `${this.accessory.context.switch.switchName} completed.`
-          );
-          this.platform.log.debug(`played? ${played}`);
-          this.setOn(false);
-        },
-      });
+      const playRequests = this.sonosDevices.map((device) =>
+        device.PlayNotification({
+          trackUri: this.accessory.context.switch.trackUri,
+          timeout: this.accessory.context.switch.timeout,
+          volume: this.accessory.context.switch.volume,
+          delayMs: this.accessory.context.switch.delayMs,
+          notificationFired: (played: boolean) => {
+            this.platform.log.info(
+              `${this.accessory.context.switch.switchName} on ${device.Name} completed.`
+            );
+            this.platform.log.debug(`played? ${played}`);
+            this.setOn(false);
+          },
+        })
+      );
+      await Promise.all(playRequests);
     }
   }
   async getOn(): Promise<CharacteristicValue> {

@@ -74,12 +74,12 @@ export class SonosAnnouncerPlatform implements DynamicPlatformPlugin {
     );
 
     for (const switchConfig of this.config.switches) {
-      const sonosDevice = manager.Devices.find(
-        (device) => device.Name === switchConfig.deviceName
+      const sonosDevices = manager.Devices.filter((device) =>
+        switchConfig.deviceNames.includes(device.Name)
       );
-      if (!sonosDevice) {
+      if (sonosDevices.length !== switchConfig.deviceNames.length) {
         throw new Error(
-          `Device defined in config was not found! Please check the name matches exactly.`
+          `A device defined in config was not found! Please check the name matches exactly.`
         );
       }
       const uuid = this.api.hap.uuid.generate(switchConfig.switchName);
@@ -101,7 +101,7 @@ export class SonosAnnouncerPlatform implements DynamicPlatformPlugin {
 
         // create the accessory handler for the restored accessory
         // this is imported from `platformAccessory.ts`
-        new SonosAnnouncerSwitch(this, existingAccessory, sonosDevice);
+        new SonosAnnouncerSwitch(this, existingAccessory, sonosDevices);
 
         // it is possible to remove platform accessories at any time using `api.unregisterPlatformAccessories`, eg.:
         // remove platform accessories when no longer present
@@ -122,7 +122,7 @@ export class SonosAnnouncerPlatform implements DynamicPlatformPlugin {
 
         // create the accessory handler for the newly create accessory
         // this is imported from `platformAccessory.ts`
-        new SonosAnnouncerSwitch(this, accessory, sonosDevice);
+        new SonosAnnouncerSwitch(this, accessory, sonosDevices);
 
         // link the accessory to your platform
         this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [

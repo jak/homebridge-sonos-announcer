@@ -4,7 +4,7 @@ export interface Config {
 
 export interface SwitchConfig {
   switchName: string;
-  deviceName: string;
+  deviceNames: string[];
   trackUri: string;
   timeout: number;
   volume: number;

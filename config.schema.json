@@ -17,10 +17,15 @@
               "type": "string",
               "required": true
             },
-            "deviceName": {
-              "title": "Sonos Device Name",
-              "description": "Name of the Sonos device (must be exact!) to play the notification on",
-              "type": "string",
+            "deviceNames": {
+              "title": "Sonos Devices",
+              "description": "The devices to play the notification on",
+              "type": "array",
+              "items": {
+                "title": "Device Name",
+                "description": "Name of the Sonos device (must be exact!)",
+                "type": "string"
+              },
               "required": true
             },
             "trackUri": {
