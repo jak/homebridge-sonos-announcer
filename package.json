@@ -1,6 +1,6 @@
 {
   "displayName": "Homebridge Sonos Announcer",
-  "name": "homebridge-sonos-announcer",
+  "name": "@jakspalding/homebridge-sonos-announcer",
   "version": "2.0.0",
   "description": "Announce via Sonos",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "url": "git://github.com/jak/homebridge-sonos-announcer.git"
   },
   "bugs": {
-    "url": "https://github.com/jak/homebridge-unifi-firewall/issues"
+    "url": "https://github.com/jak/homebridge-sonos-announcer/issues"
   },
   "engines": {
     "node": ">=14.18.1",

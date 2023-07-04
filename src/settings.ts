@@ -6,4 +6,4 @@ export const PLATFORM_NAME = "SonosAnnouncer";
 /**
  * This must match the name of your plugin as defined the package.json
  */
-export const PLUGIN_NAME = "homebridge-sonos-announcer";
+export const PLUGIN_NAME = "@jakspalding/homebridge-sonos-announcer";
