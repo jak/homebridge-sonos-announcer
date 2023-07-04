@@ -1,0 +1,62 @@
+{
+  "pluginAlias": "SonosAnnouncer",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "switches": {
+        "type": "array",
+        "items": {
+          "title": "Sonos Announcer Switch",
+          "type": "object",
+          "properties": {
+            "switchName": {
+              "title": "Switch Name",
+              "description": "The name of the Switch that will be created in Homebridge",
+              "type": "string",
+              "required": true
+            },
+            "deviceName": {
+              "title": "Sonos Device Name",
+              "description": "Name of the Sonos device (must be exact!) to play the notification on",
+              "type": "string",
+              "required": true
+            },
+            "trackUri": {
+              "title": "URL to audio file (can be any uri sonos understands)",
+              "default": "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=There%27s%20someone%20at%20the%20door",
+              "type": "string",
+              "required": true
+            },
+            "timeout": {
+              "title": "Timeout",
+              "description": "Number of seconds to return back to the original source of playback. Should be approx notification length plus 2 seconds for best results.",
+              "type": "integer",
+              "default": 10,
+              "required": true
+            },
+            "volume": {
+              "title": "Volume",
+              "description": "If included the volume will be changed before playing the notification and reverted back afterwards.",
+              "type": "integer",
+              "default": 65,
+              "minimum": 1,
+              "maximum": 100,
+              "required": false
+            },
+            "delayMs": {
+              "title": "Delay",
+              "description": "Sometimes sonos needs some extra time to play the notification. Set this to a value between 100 and 500 to wait that number of milliseconds to wait before sending the next command.",
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 500,
+              "default": 100,
+              "required": true
+            }
+          }
+        }
+      }
+    }
+  }
+}
